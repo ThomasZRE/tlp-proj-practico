@@ -33,15 +33,7 @@ def tokenizer(source_code):
 					else:
 						print("No newline found. Error")				
 					break
-					'''
-					for i in range(pos, len(source_code)):
-						# Skips until next line
-						if source_codeh.end(0)
-					else: 
-						print("No new line found. Error[i] == "\n":
-							pos = i + 1
-							break 	# To break in first newline
-'''
+		
 				text = m.group(0)
 				if token_type != 'SKIP':
 					tokens.append((token_type, text))
