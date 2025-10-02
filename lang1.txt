@@ -1,0 +1,65 @@
+# Archivo de configuracion para Snake
+# Desarrollado por ___
+
+
+#===============================
+# Game generals
+#===============================
+
+# Name and version of the game
+name { "Snake the game" }
+version { 0.1 }
+
+# Board dimensions height and width
+board_size { [15,15] }	# Define una lista/arreglo. 1ra forma
+
+# Set maximum speed 
+max_speed { 10 }
+
+#===============================
+# Game rules
+#===============================
+
+# Eats fruit rule
+eat_fruit {
+	event { "fruit_eaten" },
+	action [ 	# Define una lista/arreglo. 2da forma
+		"regenerate_fruit",
+		"increase_snake"
+	],
+}
+
+# Game over rules
+game_over {
+	conditions [
+		"touch_itself",
+		"touch_edge_screen",
+	]
+}
+
+#===============================
+# Game Controls
+#===============================
+
+let controls {
+	# Move left or right
+	mov_l: LEFT_ARROW,
+	mov_r: RIGHT_ARROW,
+	
+	# Move up or down
+	mov_u: UP_ARROW,
+	mov_d: DOWN_ARROW,
+}
+
+
+#===============================
+# Object definitions
+#===============================
+
+let snake { 
+	size: 2,
+	speed: 2
+}
+let apple { size: 1 }
+
+
