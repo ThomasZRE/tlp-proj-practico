@@ -26,15 +26,15 @@ put_piece {
 	event { "piece_landed" },
 	action [
 		"lock_piece",
-		"find_line",
-		"increase_score",
+		"check_lines",
 		"spawn_piece"
 	]
 }
 
 # Level progression
 level_up {
-	event { "lines_cleared" },
+	event { "score_milestone" },
+	points_per_level { 1500 },
 	action [
 		"increase_speed",
 		"update_level"
@@ -54,6 +54,13 @@ game_over {
 	conditions [
 		"pieces_height_reaches_top"
 	]
+}
+
+#rotar piezas
+
+rotate_piece {
+    event { "rotate_pressed" },
+    action [ "rotate_clockwise" ]
 }
 
 
@@ -77,6 +84,8 @@ let controls {
 #===============================
 
 let pieces { 
-	types { ["O", "I", "S", "Z", "L", "J", "T"] },
-	speed { 1 }
+    types { ["O", "I", "S", "Z", "L", "J", "T"] },
+    speed { 1 },
+    spawn_position { [0, 5] },  #fila,columna
+    rotation_enabled { "yes" }  
 }
