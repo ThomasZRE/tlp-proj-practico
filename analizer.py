@@ -246,7 +246,7 @@ def main():
 	filename = input("Ingresa el nombre del archivo a procesar: ").strip()
 	
 	if '.' not in filename:
-		filename += '.txt'
+		filename += '.brik'
 	
 	try:
 		with open(filename, "r", encoding="utf-8") as f:
@@ -266,7 +266,7 @@ def main():
 		
 		print(json.dumps(ast, indent=4, ensure_ascii=False))
 		
-		with open('arbol.ast', 'w', encoding='utf-8') as f:
+		with open(f'{filename.replace('.brik', '')}arbol.ast', 'w', encoding='utf-8') as f:
 			json.dump(ast, f, indent=4, ensure_ascii=False)
 		
 	except SyntaxError as e:
