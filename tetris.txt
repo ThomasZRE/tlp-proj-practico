@@ -8,17 +8,7 @@ name { "Tetris" }
 version { 0.1 }
 
 # Board dimensions height and width
-board_size { [20,10] }
-
-
-# Level progression
-level_up {
-    event { "lines_cleared" },
-    action [
-        "increase_speed",
-        "update_level"
-    ]
-}
+board_size { [20, 10] }
 
 # Set maximum speed 
 max_speed { 10 }
@@ -31,31 +21,41 @@ speed_rate { [1, 0.5, 10] }
 # Game rules
 #===============================
 
-# Put piece
+# Put piece rule
 put_piece {
 	event { "piece_landed" },
 	action [
 		"lock_piece",
 		"find_line",
-        "increase_score",
-        "spawn_piece"
-	],
+		"increase_score",
+		"spawn_piece"
+	]
+}
+
+# Level progression
+level_up {
+	event { "lines_cleared" },
+	action [
+		"increase_speed",
+		"update_level"
+	]
 }
 
 # Score system
 let scoring {
-    single_line: 100,
-    double_line: 300,
-    triple_line: 500,
-    tetris: 800
+	single_line { 100 },
+	double_line { 300 },
+	triple_line { 500 },
+	tetris { 800 }
 }
 
 # Game over rules
 game_over {
 	conditions [
-		"pieces_height_reaches_top",
+		"pieces_height_reaches_top"
 	]
 }
+
 
 #===============================
 # Game Controls
@@ -63,12 +63,12 @@ game_over {
 
 let controls {
 	# Move left or right
-	mov_l: LEFT_ARROW,
-	mov_r: RIGHT_ARROW,
+	mov_l { "LEFT_ARROW" },
+	mov_r { "RIGHT_ARROW" },
 
-	#special controls
-	rotate: UP_ARROW,
-	drop: DOWN_ARROW,
+	# Special controls
+	rotate { "UP_ARROW" },
+	drop { "DOWN_ARROW" }
 }
 
 
@@ -77,6 +77,6 @@ let controls {
 #===============================
 
 let pieces { 
-	types: ["O","I","S","Z","L","J","T"]
-	speed: 1
+	types { ["O", "I", "S", "Z", "L", "J", "T"] },
+	speed { 1 }
 }
