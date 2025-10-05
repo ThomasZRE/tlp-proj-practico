@@ -1,0 +1,35 @@
+{
+    "name": "Snake the game",
+    "version": 0.1,
+    "board_size": [
+        15,
+        15
+    ],
+    "max_speed": 10,
+    "eat_fruit": {
+        "event": "fruit_eaten",
+        "action": [
+            "regenerate_fruit",
+            "increase_snake"
+        ]
+    },
+    "game_over": {
+        "conditions": [
+            "touch_itself",
+            "touch_edge_screen"
+        ]
+    },
+    "controls": {
+        "mov_l": "LEFT_ARROW",
+        "mov_r": "RIGHT_ARROW",
+        "mov_u": "UP_ARROW",
+        "mov_d": "DOWN_ARROW"
+    },
+    "snake": {
+        "size": 2,
+        "speed": 2
+    },
+    "apple": {
+        "size": 1
+    }
+}

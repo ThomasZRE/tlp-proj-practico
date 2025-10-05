@@ -1,0 +1,70 @@
+{
+    "name": "Tetris",
+    "version": 0.1,
+    "board_size": [
+        20,
+        10
+    ],
+    "max_speed": 10,
+    "speed_rate": [
+        1,
+        0.5,
+        10
+    ],
+    "put_piece": {
+        "event": "piece_landed",
+        "action": [
+            "lock_piece",
+            "check_lines",
+            "spawn_piece"
+        ]
+    },
+    "level_up": {
+        "event": "score_milestone",
+        "points_per_level": 1500,
+        "action": [
+            "increase_speed",
+            "update_level"
+        ]
+    },
+    "scoring": {
+        "single_line": 100,
+        "double_line": 300,
+        "triple_line": 500,
+        "tetris": 800
+    },
+    "game_over": {
+        "conditions": [
+            "pieces_height_reaches_top"
+        ]
+    },
+    "rotate_piece": {
+        "event": "rotate_pressed",
+        "action": [
+            "rotate_clockwise"
+        ]
+    },
+    "controls": {
+        "mov_l": "LEFT_ARROW",
+        "mov_r": "RIGHT_ARROW",
+        "rotate": "UP_ARROW",
+        "drop": "DOWN_ARROW"
+    },
+    "pieces": {
+        "types": [
+            "O",
+            "I",
+            "S",
+            "Z",
+            "L",
+            "J",
+            "T"
+        ],
+        "speed": 1,
+        "spawn_position": [
+            0,
+            5
+        ],
+        "rotation_enabled": "yes"
+    }
+}
