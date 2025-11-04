@@ -48,7 +48,7 @@ def tokenizer(source_code):
 				break
 		
 		if not found:
-			print(f"Error léxico: no se reconoce el carácter {source_code[pos]}")
+			print("Error léxico: no se reconoce el carácter {}".format(source_code[pos]))
 			break
 	
 	return tokens
@@ -138,7 +138,7 @@ class Parser:
 			return self.symbol_table.get(tval, tval)
 
 		else:
-			raise SyntaxError(f"valor inesperado: {tval}")
+			raise SyntaxError("valor inesperado: {}".format(tval))
 
 	def parse_object(self):
 		# maneja objetos entre llaves { ... }
@@ -199,7 +199,7 @@ class Parser:
 					elif tval == '[':
 						obj[key] = self.parse_array()
 					else:
-						raise SyntaxError(f"valor raro dsp de ':' -> {tval}")
+						raise SyntaxError("valor raro dsp de ':' -> {}".format(tval))
 				else:
 					obj[key] = self.parse_value()
 
@@ -246,36 +246,39 @@ class Parser:
 # ============================
 
 def main():
-	filename = input("Ingresa el nombre del archivo a procesar: ").strip()
+    filename = raw_input("Ingresa el nombre del archivo a procesar: ").strip()
 	
-	if '.' not in filename:
-		filename += '.brik'
-	
-	try:
-		with open(filename, "r", encoding="utf-8") as f:
-			source = f.read()
-	except FileNotFoundError:
-		print(f"Error: no se encontró el archivo '{filename}'")
-		return
-	except Exception as e:
-		print(f"Error al leer el archivo: {e}")
-		return
+    if '.' not in filename:
+	    filename += '.brik'
 
-	tokens = tokenizer(source)
+    print("The filename is: {}".format(filename))
 	
-	try:
-		parser = Parser(tokens)
-		ast = parser.parse()
+    try:
+        with open("./{}".format(filename), "r") as f:
+            source = f.read()
+    
+    except IOError:
+	    print("Error: no se encontró el archivo '{}'".format(filename))
+	    return
+    except Exception as e:
+	    print("Error al leer el archivo: {}".format(e))
+	    return
+
+    tokens = tokenizer(source)
+	
+    try:
+        parser = Parser(tokens)
+        ast = parser.parse()
 		
-		print(json.dumps(ast, indent=4, ensure_ascii=False))
+        print(json.dumps(ast, indent=4, ensure_ascii=False))
 		
-		with open(f'{filename.replace('.brik', '')}arbol.ast', 'w', encoding='utf-8') as f:
-			json.dump(ast, f, indent=4, ensure_ascii=False)
+        with open('{}arbol.ast'.format(filename.replace('.brik', '')), 'w') as f:
+            json.dump(ast, f, indent=4, ensure_ascii=False)
 		
-	except SyntaxError as e:
-		print(f"ERROR DE SINTAXIS: {e}")
-	except Exception as e:
-		print(f"ERROR: {e}")
+    except SyntaxError as e:
+        print("ERROR DE SINTAXIS: {}".format(e))
+    except Exception as e:
+        print("ERROR: {}".format(e))
 
 if __name__ == "__main__":
-	main()
+    main()
