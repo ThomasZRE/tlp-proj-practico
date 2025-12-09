@@ -3,6 +3,7 @@
 
 import re 
 import json
+import sys
 
 # ============================
 # TOKENIZER (LEXER)
@@ -246,39 +247,44 @@ class Parser:
 # ============================
 
 def main():
-    filename = raw_input("Ingresa el nombre del archivo a procesar: ").strip()
+	if len(sys.argv) < 2:
+		print "USE: python analizer27.py <filepath>|<filename>"
+		return
 	
-    if '.' not in filename:
-	    filename += '.brik'
+	filename = sys.argv[1]
+	
+	if '.brik' not in filename:
+		filename += '.brik'
 
-    print("The filename is: {}".format(filename))
+	print("The filename is: {}".format(filename))
 	
-    try:
-        with open("./{}".format(filename), "r") as f:
-            source = f.read()
+	try:
+		with open("./{}".format(filename), "r") as f:
+			source = f.read()
     
-    except IOError:
-	    print("Error: no se encontró el archivo '{}'".format(filename))
-	    return
-    except Exception as e:
-	    print("Error al leer el archivo: {}".format(e))
-	    return
+	except IOError:
+		print("Error: no se encontró el archivo '{}'".format(filename))
+		return
+	except Exception as e:
+		print("Error al leer el archivo: {}".format(e))
+		return
 
-    tokens = tokenizer(source)
+	tokens = tokenizer(source)
 	
-    try:
-        parser = Parser(tokens)
-        ast = parser.parse()
+	try:
+		parser = Parser(tokens)
+		ast = parser.parse()
 		
-        print(json.dumps(ast, indent=4, ensure_ascii=False))
+		print(json.dumps(ast, indent=4, ensure_ascii=False))
 		
-        with open('{}.ast'.format(filename.replace('.brik', '')), 'w') as f:
-            json.dump(ast, f, indent=4, ensure_ascii=False)
+		with open('{}.ast'.format(filename.replace('.brik', '')), 'w') as f:
+			json.dump(ast, f, indent=4, ensure_ascii=False)
 		
-    except SyntaxError as e:
-        print("ERROR DE SINTAXIS: {}".format(e))
-    except Exception as e:
-        print("ERROR: {}".format(e))
+	except SyntaxError as e:
+		print("ERROR DE SINTAXIS: {}".format(e))
+	except Exception as e:
+		print("ERROR: {}".format(e))
+	
 
 if __name__ == "__main__":
     main()
