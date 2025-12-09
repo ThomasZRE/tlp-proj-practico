@@ -1,0 +1,80 @@
+<tetris_config> ::= <configuracion_general> <reglas_juego> <controles> <definicion_objetos>
+
+# ==========================================
+# 1. Configuración General
+# ==========================================
+<configuracion_general> ::= <nombre> <version> <tablero> <velocidad_max> <tasa_velocidad>
+
+<nombre>          ::= "name" "{" <cadena> "}"
+<version>         ::= "version" "{" <numero> "}"
+<tablero>         ::= "board_size" "{" <lista_numeros> "}"
+<velocidad_max>   ::= "max_speed" "{" <numero> "}"
+<tasa_velocidad>  ::= "speed_rate" "{" <lista_numeros> "}"
+
+# ==========================================
+# 2. Reglas del Juego (Game Rules)
+# ==========================================
+<reglas_juego>    ::= <regla_colocacion> <regla_nivel> <sistema_puntuacion> <regla_gameover> <regla_rotacion>
+
+# --- Colocar pieza ---
+<regla_colocacion> ::= "put_piece" "{" <propiedades_evento> "}"
+
+# --- Subida de nivel ---
+<regla_nivel>      ::= "level_up" "{" <prop_evento> "," <prop_puntos> "," <prop_accion> "}"
+<prop_puntos>      ::= "points_per_level" "{" <numero> "}"
+
+# --- Sistema de Puntuación (usa 'let' opcional y bloque) ---
+<sistema_puntuacion> ::= <let_opcional> "scoring" "{" <tabla_puntos> "}"
+<tabla_puntos>       ::= <fila_puntos> | <fila_puntos> "," <tabla_puntos>
+<fila_puntos>        ::= <identificador> "{" <numero> "}"
+
+# --- Game Over ---
+<regla_gameover>   ::= "game_over" "{" <condiciones> "}"
+<condiciones>      ::= "conditions" <lista_cadenas>
+
+# --- Rotación ---
+<regla_rotacion>   ::= "rotate_piece" "{" <propiedades_evento> "}"
+
+# ==========================================
+# 3. Controles
+# ==========================================
+<controles>        ::= <let_opcional> "controls" "{" <mapeo_teclas> "}"
+<mapeo_teclas>     ::= <tecla_def> | <tecla_def> "," <mapeo_teclas>
+<tecla_def>        ::= <identificador> "{" <cadena> "}"
+
+# ==========================================
+# 4. Definición de Objetos (Piezas)
+# ==========================================
+<definicion_objetos> ::= <let_opcional> "pieces" "{" <config_piezas> "}"
+<config_piezas>      ::= <propiedad_pieza> | <propiedad_pieza> "," <config_piezas>
+
+<propiedad_pieza>    ::= "types" "{" <lista_cadenas> "}"
+                       | "speed" "{" <numero> "}"
+                       | "spawn_position" "{" <lista_numeros> "}"
+                       | "rotation_enabled" "{" <cadena> "}"
+
+# ==========================================
+# 5. Estructuras Genéricas y Primitivos
+# ==========================================
+
+# Estructura común para eventos: event { ... }, action [ ... ]
+<propiedades_evento> ::= <prop_evento> "," <prop_accion>
+<prop_evento>        ::= "event" "{" <cadena> "}"
+<prop_accion>        ::= "action" <lista_cadenas>
+
+# Listas
+<lista_numeros>      ::= "[" <seq_numeros> "]"
+<seq_numeros>        ::= <numero> | <numero> "," <seq_numeros>
+
+<lista_cadenas>      ::= "[" <seq_cadenas> "]"
+<seq_cadenas>        ::= <cadena> | <cadena> "," <seq_cadenas>
+
+# Primitivos
+<let_opcional>       ::= "let" | ""
+<identificador>      ::= <letra> <resto_id>
+<resto_id>           ::= <letra> | <digito> | "_" | <resto_id> | ""
+<cadena>             ::= '"' <caracteres> '"'
+<numero>             ::= <entero> | <entero> "." <entero>
+<entero>             ::= <digito> | <digito> <entero>
+<letra>              ::= "a"..."z" | "A"..."Z" | "_"
+<digito>             ::= "0"..."9"

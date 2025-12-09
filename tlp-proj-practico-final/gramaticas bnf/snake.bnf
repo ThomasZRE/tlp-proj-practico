@@ -1,0 +1,49 @@
+<configuracion> ::= <sentencia> | <sentencia> <configuracion>
+
+# --- Estructura Principal ---
+<sentencia>     ::= <declaracion_constante> | <declaracion_let>
+
+# "name { ... }" o "eat_fruit { ... }"
+<declaracion_constante> ::= <identificador> <cuerpo_valor>
+
+# "let snake { ... }"
+<declaracion_let>       ::= "let" <identificador> <cuerpo_valor>
+
+# El cuerpo puede ser un bloque {} o una lista directa []
+<cuerpo_valor>  ::= "{" <contenido_bloque> "}" | <lista>
+
+# --- Contenido de los Bloques ---
+# Un bloque puede contener un valor simple (ej. { 4 }) o propiedades (ej. { size: 2, speed: 2 })
+<contenido_bloque> ::= <valor_primitivo> | <propiedades>
+
+<propiedades>      ::= <propiedad> | <propiedad> <separador_opc> <propiedades>
+<separador_opc>    ::= "," | ""  /* Coma es opcional en algunos casos o implícita por nueva línea */
+
+# --- Definición de Propiedades (Clave-Valor) ---
+# Soporta los 3 estilos vistos en tu código:
+# 1. mov_l: "LEFT"
+# 2. event { "val" }
+# 3. action [ ... ]
+<propiedad> ::= <identificador> ":" <valor> 
+              | <identificador> "{" <contenido_bloque> "}"
+              | <identificador> <lista>
+
+# --- Valores ---
+<valor>           ::= <valor_primitivo> | <lista>
+<valor_primitivo> ::= <numero> | <cadena> | <booleano>
+
+# --- Listas y Arrays ---
+<lista>           ::= "[" <elementos_lista> "]"
+<elementos_lista> ::= <valor> | <valor> "," <elementos_lista> | ""
+
+# --- Tokens Básicos ---
+<identificador> ::= <letra> | <letra> <resto_identificador>
+<resto_identificador> ::= <letra> | <digito> | "_" | <resto_identificador>
+
+<cadena> ::= '"' <caracteres> '"'
+<numero> ::= <entero> | <entero> "." <entero>
+<entero> ::= <digito> | <digito> <entero>
+<booleano> ::= "true" | "false"
+
+<letra>  ::= "a"..."z" | "A"..."Z" | "_"
+<digito> ::= "0"..."9"
